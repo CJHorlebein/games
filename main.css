@@ -1,0 +1,17 @@
+.pebble {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: #999999;
+    display: inline-block;
+}
+
+.taken {
+    background-color: #ffb600
+}
+
+.ttt-btn {
+    width: 40px;
+    height: 40px;
+    margin: 2px
+}
