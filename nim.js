@@ -1,4 +1,4 @@
-function renderNimLayout(){
+function renderNimLayout() {
     document.getElementById('main-content').innerHTML = `
         <h1 class="text-center mb-0">NIM</h1>
         <div>
@@ -21,53 +21,64 @@ function renderNimLayout(){
     `;
 }
 
+var state = {}
 
+function nimReset() {
+    state.move = 0;
+    state.taken = 0;
+}
 
-function renderNimPebbles(taken) {
-    // Change this render function to use the "game" parameter
-    html = "";
-    if (move) {
-        html += `<h3>You took ${taken} pebble(s) and the Computer took ${4 - taken} pebble(s).</h3>`;
+function renderNim() {
+    var button = document.getElementById('updatePebbles');
+    var content = document.getElementById('content');
+    var reset = document.getElementById('reset');
 
-        if (move > 3) {
-            move = 4;
-            html += "<h1>Computer won! So sorry for you!</h1>";
-            return html;
-        }
+    button.addEventListener('click', function () {
+        state.move++;
+        state.taken = document.getElementById('takeInput').value;
+        nimFuncCalls();
+    });
+
+    reset.addEventListener('click', function () {
+        nimReset();
+        nimFuncCalls();
+    });
+    content.innerHTML = renderPebbles();
+}
+
+function nimFuncCalls() {
+    var remaining = document.getElementById('remaining');
+    remaining.innerHTML = 16 - state.move * 4;
+    content.innerHTML = renderPebbles();
+    content.innerHTML += lastPlay();
+}
+
+function lastPlay() {
+    var html = "";
+    if (state.move) {
+        html += `<h3>You took ${state.taken} pebble(s) and the Computer took ${4 - state.taken} pebble(s).</h3>`;
     }
-    for (var i = 0; i < move * 4; i++) {
+    if (state.move > 3) {
+        state.move = 3;
+        html += "<h1>Computer won! So sorry for you!</h1>";
+    }
+    return html;
+}
+
+function renderPebbles() {
+    var html = "";
+    for (var i = 0; i < state.move * 4; i++) {
         html += `<div class="pebble taken"></div>`
     }
-    for (var i = 0; i < 16 - move * 4; i++) {
+    for (var i = 0; i < 16 - state.move * 4; i++) {
         html += `<div class="pebble"></div>`
     }
     return html;
 }
 
-function renderNimLayout(){
-
-    var button = document.getElementById('updatePebbles');
-    var reset = document.getElementById('reset');
-    var remaining = document.getElementById('remaining');
-    var move = 0;
-
-    button.addEventListener('click', function () {
-        move++;
-        var taken = document.getElementById('takeInput').value;
-        content.innerHTML = renderNimPebbles(taken);
-        remaining.innerHTML = 16 - move * 4;
-    });
-
-    reset.addEventListener('click', function () {
-        playNim();
-    });
-    content.innerHTML = renderNim(0);
-}
-
-
 var nimButton = document.getElementById('nim');
-nimButton.addEventListener('click', function(){
-    renderNimLayout();
-    playNim
+nimButton.addEventListener('click', function () {
+    renderNimLayout()
+    nimReset()
+    renderNim();
 });
-
