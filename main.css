@@ -6,6 +6,10 @@
     display: inline-block;
 }
 
+.btn-info {
+    width: 200px;
+}
+
 .taken {
     background-color: #ffb600
 }
