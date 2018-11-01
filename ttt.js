@@ -1,36 +1,37 @@
-var playTtt = function (){
-    var mainContent = document.getElementById('main-content');
-    var html = `
+function renderTttLayout() {
+    document.getElementById('main-content').innerHTML = `
         <h1 class="text-center mb-0">Tic Tac Toe</h1>
-        <div class="container d-flex flex-column justify-content-center align-items-center">
+        <div class="container d-flex flex-column justify-content-center">
             <h4>It's Your turn!</h4>
-            <div class="w-25 text-center d-flex flex-wrap mx-auto justify-content-around">
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
-                <button class="ttt-btn w-25 m-2"> </button>
+            <div id="gameArea">
             </div>
         </div>
     `
-    mainContent.innerHTML = html;
-    
-    tttButtons = Array.from(document.getElementsByClassName('ttt-btn'));
-    tttButtons.forEach(position =>{
-        position.addEventListener('click', function(){
-            position.innerHTML = "X";
-            console.log(this);
-        });
-    });
-    function renderTtt(game) {
-        // Change this render function to use the "game" parameter
-    
-    }
+    renderTttGame(3);
 }
 
+function renderTttGame(size) {
+    var tttBoard = "";
+    for (var i = 0; i < size; i++) {
+        tttBoard += `<div class="w-25 text-center d-flex mx-auto justify-content-between">`
+        for (var j = 0; j < size; j++) {
+            tttBoard += `<button class="ttt-btn w-25 m-2"></button>`
+        }
+        tttBoard += `</div>`
+    }
+    document.getElementById('gameArea').innerHTML = tttBoard;
+}
+
+var playTtt = function () {
+    tttButtons = Array.from(document.getElementsByClassName('ttt-btn'));
+    tttButtons.forEach(position => {
+        position.addEventListener('click', function () {
+            position.innerHTML = "X";
+        });
+    });
+}
 var tttButton = document.getElementById('ttt');
-tttButton.addEventListener('click', playTtt);
+tttButton.addEventListener('click', function () {
+    renderTttLayout();
+    playTtt();
+});
