@@ -9,12 +9,14 @@ function renderTttLayout() {
     `
     renderTttGame(3);
 }
+
 var currGame;
 function resetTtt() {
     currGame = [
         ["", "", ""],
         ["", "", ""],
-        ["", "", ""]
+        ["", "", ""],
+        0
     ]
 }
 
@@ -28,22 +30,23 @@ function renderTttGame(size) {
         tttBoard += `</div>`
     }
     document.getElementById('gameArea').innerHTML = tttBoard;
+    currGame[3] % 2 ? playTtt("O") : playTtt("X");
 }
 
-var playTtt = function () {
+function playTtt(sym) {
+    currGame[3]++;
+    console.log(currGame[3]);
     tttButtons = Array.from(document.getElementsByClassName('ttt-btn'));
     tttButtons.forEach(position => {
         position.addEventListener('click', function () {
-            currGame[0][0] = "X";
-            console.log(this.id);
+            currGame[this.id[0]][this.id[1]] = sym;
+            renderTttGame(3);
         });
     });
-    renderTttGame(3);
-    console.log(currGame);
 }
+
 var tttButton = document.getElementById('ttt');
 tttButton.addEventListener('click', function () {
     resetTtt();
     renderTttLayout();
-    playTtt();
 });

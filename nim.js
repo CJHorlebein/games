@@ -22,7 +22,6 @@ function renderNimLayout() {
 }
 
 var state = {}
-
 function nimReset() {
     state.move = 0;
     state.taken = 0;
